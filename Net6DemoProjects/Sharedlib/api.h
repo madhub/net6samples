@@ -4,6 +4,7 @@
 
 //EXPORT void Demo(unsigned char** ptr1); 
 
+#include<stdint.h>
 
 #ifndef _Sharedlib_H_
 	#define _Sharedlib_H_
@@ -15,9 +16,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-	MYAPI void __cdecl Demo(unsigned char** ptr1, int* size);
+	
+	typedef uint8_t* (*MemoryAllocator)(uint64_t size);
+	MYAPI int __cdecl Demo(uint8_t* inbuf, uint64_t inBufSize, MemoryAllocator memoryAllocator, uint8_t** outBufPtr, uint64_t* outBufSize);
 	//MYAPI void print_line(const char* str);
+	MYAPI int __cdecl Decompress(	const uint8_t* in, uint64_t in_len,
+					uint8_t** out, uint64_t* out_len);
+
+	MYAPI int __cdecl FreeMemory(const uint8_t* in);
+
 
 #ifdef __cplusplus
 }
